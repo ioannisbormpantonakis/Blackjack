@@ -1,7 +1,7 @@
 # Blackjack
 
 ## Description
-The goal of this project is to test various agents on the Blackjack enviroment, with emphasis on Q-Learning agent.
+The goal of this project is to test various agents on the Blackjack enviroment, with emphasis on learning agents.
 
 ## Files  
 The following **.py** and **.ipynb** files exist in the directory:
@@ -33,7 +33,10 @@ Bonus game available to play by running this script.
 ## References
 
 Q-Learning  
-https://en.wikipedia.org/wiki/Q-learning
+https://en.wikipedia.org/wiki/Q-learning  
+
+Sarsa  
+https://en.wikipedia.org/wiki/State%E2%80%93action%E2%80%93reward%E2%80%93state%E2%80%93action  
 
 Libraries  
 - Numpy: https://numpy.org/  

@@ -102,6 +102,59 @@ def run_simulation_q(num_rounds, agent):
 
 
 
+def run_simulation_sarsa(num_rounds, agent):
+    env = Blackjack()
+    history_results = []
+    history_rewards = []
+    history_actions = []
+    history_states = []
+
+    for round in range(num_rounds):
+        state = env.game_reset()
+        current_reward = 0
+        round_actions = []
+        round_states = [state]
+
+        if env.game_done:
+            current_reward = env.reward
+        else:
+            old_action = agent.action(state)
+
+            while not env.game_done:
+                old_state = state
+                round_actions.append(old_action)
+
+                new_state, reward, game_done = env.player_step(old_action)
+                round_states.append(new_state)
+                current_reward += reward
+
+                new_action = agent.action(new_state) if not game_done else None
+                agent.update(old_state, new_state, old_action, new_action, reward, game_done)
+
+                state = new_state
+                old_action = new_action
+
+        result = 1 if current_reward > 0 else (-1 if current_reward < 0 else 0)
+        history_actions.append(round_actions)
+        history_states.append(round_states)        
+        history_results.append(result)
+        history_rewards.append(current_reward)
+
+    history_results = np.array(history_results)
+    history_rewards = np.array(history_rewards)
+    history = {
+        'results' : history_results,
+        'rewards' : history_rewards,
+        'actions' : history_actions,
+        'states' : history_states,
+        'q_table' : agent.q_table
+
+    }    
+    
+    return history
+
+
+
 def show_results(history):
     fig, ax = plt.subplots(2, 2, figsize=(10, 10))
     ax = ax.ravel()
